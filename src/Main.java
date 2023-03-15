@@ -6,6 +6,9 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.gson.*;
 import com.google.gson.JsonObject;
@@ -15,7 +18,6 @@ public class Main
 {
     public static void main( String[] args )
     {
-        Gson gson = new Gson();
         HashMap<String, String> map = new HashMap<>();
         String server = "localhost";
         //String path = 1000;
@@ -31,16 +33,19 @@ public class Main
             PrintStream out = new PrintStream( socket.getOutputStream() );
             BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
 
+            Gson gson = new Gson();
 
-            map.put("asdfasdf","asdfasd");
-            map.put("as2","1231");
+            System.out.println(gson.toJson(new Message()));
 
-            out.println(gson.toJson(map));
+
+            out.println(gson.toJson(new Message()));
 
             // Read data from the server until we finish reading the document
             String line = in.readLine();
             while( line != null )
             {
+
+
                 System.out.println( line );
                 line = in.readLine();
             }
