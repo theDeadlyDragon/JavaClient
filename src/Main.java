@@ -18,7 +18,9 @@ public class Main
 {
     public static void main( String[] args )
     {
-        HashMap<String, String> map = new HashMap<>();
+
+        System.out.println(ClientInfo.getInstance().getClientData());
+
         String server = "localhost";
         //String path = 1000;
 
@@ -46,7 +48,7 @@ public class Main
             {
 
 
-                System.out.println( line );
+                System.out.println("1" + line );
                 line = in.readLine();
             }
 
