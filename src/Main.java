@@ -10,9 +10,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.gson.*;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 public class Main
 {
@@ -35,12 +32,25 @@ public class Main
             PrintStream out = new PrintStream( socket.getOutputStream() );
             BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
 
-            Gson gson = new Gson();
+            Message mes = new Message();
 
-            System.out.println(gson.toJson(new Message()));
+            mes.put("name",ClientInfo.getInstance().name);
+            mes.put("messageType","1");
+            mes.put("uuid",ClientInfo.getInstance().uuid);
 
 
-            out.println(gson.toJson(new Message()));
+
+
+            out.println(mes.toJson());
+
+            mes.clear();
+
+            mes.put("name",ClientInfo.getInstance().name);
+            mes.put("messageType","2");
+            mes.put("uuid",ClientInfo.getInstance().uuid);
+            mes.put("to" ,"9d241452-6c39-4049-8d5f-75336e5078a6");
+
+            out.println(mes.toJson());
 
             // Read data from the server until we finish reading the document
             String line = in.readLine();
