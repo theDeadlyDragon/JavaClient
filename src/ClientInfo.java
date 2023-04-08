@@ -8,9 +8,9 @@ import java.util.UUID;
 public class ClientInfo {
     private static ClientInfo instance;
 
-    public UUID uuid = UUID.fromString("f8cc13c3-62e9-4860-8c99-cadf2aaddd46");
-    public String name = "";
-    public String fileName = "src/config.json";
+    public static UUID uuid = UUID.fromString("f8cc13c3-62e9-4860-8c99-cadf2aaddd46");
+    public static String name = "";
+    public static String fileName = "src/config.json";
     private ClientInfo(){
         readConfigFile();
         if(uuid == null)
@@ -47,7 +47,7 @@ public class ClientInfo {
         return instance;
     }
 
-    public String getClientData() {
+    public static String getClientData() {
         return "clientName = " + name + "\nClientId = " + uuid;
     }
 }
