@@ -3,7 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-
+import java.util.Formatter;
+import java.util.HashMap;
 
 
 public class Client {
@@ -24,9 +25,6 @@ public class Client {
             this.socket = new Socket(server,port);
             out = new PrintStream(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            this.sockAuth();
-
         }
         catch(Exception e){
             e.printStackTrace();
@@ -43,12 +41,19 @@ public class Client {
 
 
         try{
-            String line = in.readLine();
+            String line = "";
 
-            while( line != null )
+            while(true)
             {
-                System.out.println("1: " + line );
                 line = in.readLine();
+                if(line == null)
+                    break;
+
+
+                if(line != null && !mesHandeld(line))
+                    return line;
+
+
             }
 
             in.close();
@@ -60,6 +65,29 @@ public class Client {
             e.printStackTrace();
         }
         return output;
+    }
+
+    public boolean mesHandeld(String data){
+
+        HashMap<String,Object> stringData = JsonFomatter.jsonToHashmap(data);
+
+        System.out.println(stringData.toString());
+
+        if(stringData.toString().equals("{}") && stringData.containsKey("messageType") )
+            return false;
+
+        String key = (String)stringData.get("messageType");
+        System.out.println(key);
+
+        switch (key){
+            case "auth":
+                this.sockAuth();
+                break;
+            default:
+                System.out.println("key: " + key + " not implemented");
+        }
+
+        return true;
     }
 
     public void sockAuth(){
@@ -76,6 +104,8 @@ public class Client {
     public void sendJson(Message message){
         String data = message.toJson();
         out.println(data);
+
+
     }
 
 

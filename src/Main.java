@@ -19,8 +19,8 @@ public class Main
         System.out.println(ClientInfo.getClientData());
         System.out.println("Loading config");
 
-        Client tcpClient =  new Client("localhost",8080);
+        Client tcpClient =  new Client("192.168.178.124",8080);
 
-        tcpClient.listenMessage();
+        System.out.println(tcpClient.listenMessage());
     }
 }
